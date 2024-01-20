@@ -1,0 +1,47 @@
+<!-- @format -->
+
+{% extends "layout.html" %} 
+
+{% load humanize %}
+
+
+{% block title %}ประวัติการเช่าบอร์ดเกม{% endblock title%} 
+
+
+{% block content %}
+
+<section class="content2 cid-tsEQSCqggh my-2" id="content2-2">
+  <div class="container my-5">
+    <div class="mbr-section-head">
+      <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+        <strong>ประวัติการเช่าบอร์ดเกม</strong>
+      </h4>
+    </div>
+    <div class="row my-5">
+      <table class="table text-center table-bordered my-5">
+        <thead>
+          <tr>
+            <th scope="col">รหัสการเช่า</th>
+            <th scope="col">วันที่เช่า</th>
+            <th scope="col">ยอดชำระเงิน</th>
+            <th scope="col">ดูรายละเอียด</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in order %}
+          <tr>
+            <th scope="row">{{i.id}}</th>
+            <td>{{i.created | date:"d M Y"}}</td>
+            <td>{{i.total | intcomma }}</td>
+            <td>
+              <a href="{% url "orderDetail" i.id %}">รายละเอียด</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br /><br /><br /><br /><br /><br /><br />
+</section>
+{% endblock content %}

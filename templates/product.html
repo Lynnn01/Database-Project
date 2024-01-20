@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% load humanize %}
+{% block title %}
+บอร์ดเกมทั้งหมด
+{% endblock title %}
+
+{% block content %} <!-- เนื้อหา (Content) -->
+     <section class="content2 cid-tsEQSCqggh" id="content2-2">
+        <div class="container">
+            <div class="mbr-section-head">
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+                    <strong>บอร์ดเกมทั้งหมด</strong>
+                </h4>
+            </div>
+            <div class="row mt-4">
+                <!-- ข้อมูลสินค้า 1 -->
+                
+                {% for i in products %}
+                <div class="item features-image сol-12 col-md-6 col-lg-4">
+                    <div class="item-wrapper">
+                        <div class="item-img">
+                            <a href="{% url "productDetail" i.id %}">
+                                <img src={{i.image.url}}>
+                            </a>
+                        </div>
+                        <div class="item-content">
+                            <h6 class="item-subtitle mbr-fonts-style mt-1 display-7">
+                                <strong>ชื่อบอร์ดเกม : {{i.name}}</strong>
+                            </h6>
+                            <p class="mbr-text mbr-fonts-style mt-3 display-7">ราคา {{i.price | intcomma}} บาท/ชั่วโมง</p>
+                        </div>
+                        <div class="mbr-section-btn item-footer mt-2">
+                            {% if i.stock <= 0 %}
+                                <h2 class="text-secondary text-center">บอร์ดเกมหมด</h2>
+                            {% else %}
+                            <a href="{% url "addCart" i.id %}" class="btn btn-primary display-4">
+                                <i class="bi bi-cart3"></i></i>&nbsp;
+                                หยิบบอร์ดเกมลงตะกร้า
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                    
+                
+            <!-- หมายเลขหน้า -->
+            <nav aria-label="product-pagination" class="media-container-row">
+                <ul class="pagination pagination-lg">
+                    {% for i in products.paginator.page_range %}
+                        {% if i != products.number %}
+                            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                        {% else %}
+                            <li class="page-item active"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                  
+                </ul>
+            </nav>
+        </div>
+    </section>
+{% endblock content %}

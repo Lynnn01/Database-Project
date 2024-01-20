@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% load humanize %}
+{% block title %}
+รายละเอียดบอร์ดเกม
+{% endblock title %}
+
+{% block content %}
+<!-- เนื้อหา (Content) -->
+    <div class="container my-5">
+        <div class="card-wrapper">
+            <div class="row align-items-center mt-4 my-4">
+                <div class="col-12 col-lg-6">
+                    <div class="image-wrapper">
+                        <img src="{{details.image.url}}">
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 my-4">
+                    <div class="text-box">
+                        <h5 class="mbr-title mbr-fonts-style display-5">
+                            <strong>{{details.name}}</strong>
+                            <p class="display-7 text-secondary">เหลือบอร์ดเกมอยู่ {{details.stock}} กล่อง</p>
+                        </h5>
+                        <p class="mbr-text mbr-fonts-style display-7">{{details.description}}</p>
+                        <div class="cost">
+                            <span class="currentcost mbr-fonts-style pr-2 display-5">ราคา {{details.price | intcomma}} บาท/ชั่วโมง</span>
+                        </div>
+                        <div class="mbr-section-btn pt-3">
+                            {% if details.stock <= 0 %}
+                                <h2 class="text-secondary mx-2 text-"><b>บอร์ดเกมหมด</b></h2>
+
+                            {% else %}
+                            <a href="{% url "addCart" details.id %}" class="btn btn-primary display-4">
+                                <i class="bi bi-cart3"></i></i>&nbsp;
+                                หยิบบอร์ดเกมลงตะกร้า
+                            </a>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+{% endblock content %}

@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <link rel="shortcut icon" href="{% static "assets/img/board-game.jpg" %}" type="image/x-icon">
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+    <!-- external lib -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- internal lib -->
+    <link rel="stylesheet" href="{% static "assets/dropdown/css/style.css" %}">
+    <link rel="stylesheet" href="{% static "assets/theme/css/style.css" %}">
+    <link rel="stylesheet" href="{% static "assets/custom/css/custom-style.css" type="text/css" %}">
+</head>
+
+<body>
+    <!-- แท็ปเมนู (Menu) -->
+    <section class="menu menu3 cid-tsEQosCCDP" id="menu3-0">
+        <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
+            <div class="container">
+                <div class="navbar-brand">
+                    <span class="navbar-logo">
+                        <a href="/">
+                            <img src="{% static "assets/img/board-game.jpg" %}" style="height: 3rem;">
+                        </a>
+                    </span>
+                </div>
+                <!-- responsive menu  -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse"
+                    data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+                <!-- รายการเมนู  -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
+                        <li class="nav-item">
+                            <a class="nav-link link text-black show display-4" href="/">หน้าแรก</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link text-black show display-4" href="/products">บอร์ดเกมทั้งหมด</a>
+                        </li>
+                        
+
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link link text-black show display-4" href="/tables">จองโต๊ะ</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link link text-black dropdown-toggle show display-4" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="bi bi-person-circle iconfont"></span>
+                        </a>
+                        <div class="dropdown-menu show" aria-labelledby="dropdown-751" data-bs-popper="none">
+                            <a class="text-black show dropdown-item display-4" href="/orderhistory">สวัสดี , {{request.user.username}} </a>
+                            <a class="text-black show dropdown-item display-4" href="/logout">ออกจากระบบ</a>
+                        </div>
+                        </li>
+                        
+                        <li class="nav-item">
+                        <a class="nav-link link text-black show display-4" href="/cart">
+                            <span class="bi bi-cart3 iconfont iconfont-btn"></span>
+                        </a>
+                        </li>
+
+                        {% else %}
+                        <li class="nav-item dropdown">
+                        <a class="nav-link link text-black dropdown-toggle show display-4" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="bi bi-person-circle iconfont"></span>
+                        </a>
+                        <div class="dropdown-menu show" aria-labelledby="dropdown-751" data-bs-popper="none">
+                            <a class="text-black show dropdown-item display-4" href="/register">สมัครสมาชิก</a>
+                            <a class="text-black show dropdown-item display-4" href="/login">เข้าสู่ระบบ</a>
+                        </div>
+                        </li>
+                        {% endif %}
+
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+    <!-- เนื้อหา (Content) -->
+    {% block content %}
+    {% endblock content %}
+    <!-- Footer -->
+    <section class="footer7 cid-tsQdrs3Vrj" id="footer7-13">
+        <div class="container">
+            <div class="media-container-row align-center mbr-white">
+                <div class="col-12">
+                    <p class="mbr-text mb-0 mbr-fonts-style display-7">ยินดีต้อนรับสู่ THE BOARDGAME CAFE</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="{% static "assets/dropdown/js/navbar-dropdown.js" %}"></script>
+    <script src="{% static "assets/theme/js/script.js" %}"></script>
+</body>
+</html>

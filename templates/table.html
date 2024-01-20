@@ -1,0 +1,58 @@
+<!-- @format -->
+
+{% extends "layout.html" %} 
+{% load humanize %} 
+{% block title %} การจองโต๊ะ {%endblock title %} 
+
+
+{% block content %}
+<!-- เนื้อหา (Content) -->
+<section class="content2 cid-tsEQSCqggh my-2" id="content2-2">
+  <div class="container my-5">
+    <div class="mbr-section-head">
+      <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+        <strong>โต๊ะทั้งหมด</strong>
+      </h4>
+    </div>
+    <div class="row my-5">
+      <table class="table text-center table-bordered my-5">
+         {% csrf_token %} {% if messages %} {% for i in messages %}
+          <div class="alert alert-{{i.tags}}" role="alert">{{i}}</div>
+          {% endfor %} {% endif %}
+        <thead>
+          <tr>
+            <th scope="col">โต๊ะที่</th>
+            <th scope="col">ขนาดโต๊ะ</th>
+            <th scope="col">รายละเอียด</th>
+            <th scope="col">สถานะ</th>
+            <th scope="col">การจอง</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in table %}
+
+          <tr>
+            <th scope="row">{{i.name}}</th>
+            <td>{{i.slot}}</td>
+            <td>{{i.description}}</td>
+            <td>{{i.customer}}</td>
+
+            {% if i.status == False %}
+            <td>
+              <a class="text-success mx-2 text-center" href="{% url "reservTable" i.id %}" onclick="return confirm('คุณต้องการจองโต๊ะหรือไม่ ?')">จอง</a>
+            </td>
+            {% else %}
+            <td>
+              <h6 class="text-secondary mx-2 text-center"><b>โต๊ะเต็ม</b></h6>
+            </td>
+            {% endif %}
+            
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br /><br /><br /><br /><br /><br /><br />
+</section>
+{% endblock content %}

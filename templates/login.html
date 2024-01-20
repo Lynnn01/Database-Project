@@ -1,0 +1,51 @@
+<!-- @format -->
+
+{% extends "layout.html" %} {% block title %}เข้าสู่ระบบ{% endblock title%}
+{%block content %}
+
+<section class="form7 cid-tsJ8wGtENs" id="form7-q">
+  <div class="container my-4">
+    <div class="mbr-section-head">
+      <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+        <strong>ลงชื่อเข้าใช้</strong>
+      </h3>
+    </div>
+    <div class="row justify-content-center mt-4">
+      <div class="col-lg-8 mx-auto mbr-form">
+        <form method="POST" class="mbr-form form-with-styler mx-auto">
+          {% csrf_token %} {% if messages %} {% for i in messages %}
+          <div class="alert alert-{{i.tags}}" role="alert">{{i}}</div>
+          {% endfor %} {% endif %}
+
+          <div class="dragArea row">
+            <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                class="form-control"
+                value=""
+              />
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                class="form-control"
+                value=""
+              />
+            </div>
+            <div class="col-auto mbr-section-btn align-center">
+              <button type="submit" class="btn btn-primary display-4">
+                เข้าสู่ระบบ
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,85 @@
+<!-- @format -->
+
+
+{% extends "layout.html" %} {% block title %}ตะกร้าสินค้า{% endblock title %}
+{% load humanize %}
+{%block content %}
+
+<!-- เนื้อหา (Content) -->
+<section class="h-100 h-custom my-5">
+  <div class="container py-5 h-100 my-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div
+          class="card card-registration card-registration-2"
+          style="border-radius: 15px; background-color: #fafafa"
+        >
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-7">
+                <div class="p-5">
+                  <!-- สินค้าในตะกร้า -->
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-5"
+                  >
+                    <h4 class="fw-bold mb-0 text-black">รายการสั่งซื้อ</h4>
+                    <h6 class="mb-0 text-muted">x รายการ</h6>
+                  </div>
+                  <hr class="my-4" />
+                  {% for i in item %}
+
+                  <div
+                    class="row mb-4 d-flex justify-content-between align-items-center"
+                  >
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                      <img
+                        src="{{i.product.image.url}}"
+                        class="img-fluid rounded-3"
+                      />
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                      <h6 class="text-black mb-0">
+                        {{i.quantity}} x {{i.product.name}}
+                      </h6>
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-xl-3 offset-lg-1">
+                      <h6 class="mb-0">{{i.sub_total | intcomma}}</h6>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                      <a href="{% url "removeCart" i.product.id%}" onclick="return confirm('คุณต้องการลบสินค้าออกจากตะกร้าไหม ?')"><h5><i class="bi bi-trash3"></i></h5
+                      ></a>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  <hr class="my-4" />
+                </div>
+              </div>
+              <div class="col-lg-5 bg-grey">
+                <div class="p-5">
+                  <h4 class="fw-bold mb-5 mt-0 pt-0">สรุปคำสั่งซื้อ</h4>
+                  <hr class="my-4" />
+                  <div class="d-flex justify-content-between mb-5">
+                    <h5 class="text-uppercase">ยอดชำระเงินรวม</h5>
+                    <h5>{{total | intcomma}} บาท</h5>
+                  </div>
+                  <a href= "/order" >
+                    <button
+                      type="button"
+                      class="btn btn-primary w-100 text-center"
+                      data-mdb-ripple-color="dark"
+                    >
+                      ดำเนินการ
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br /><br />
+</section>
+
+{% endblock content %}

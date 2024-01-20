@@ -1,0 +1,58 @@
+<!-- @format -->
+
+{% extends "layout.html" %} 
+
+{% load humanize %}
+
+
+{% block title %}รายละเอียดการเช่าบอร์ดเกม{% endblock title%} 
+
+
+{% block content %}
+
+<section class="content2 cid-tsEQSCqggh" id="content2-2">
+        <div class="container my-5">
+            <div class="mbr-section-head">
+                <h4 class="mbr-section-title mbr-fonts-style align-start mb-0 display-2">
+                    <strong>รหัสการเช่า {{order.id}}</strong>
+                </h4>
+            </div>
+            <div class="row my-5">
+                <table class="table text-center table-bordered my-5">
+                    <thead>
+                      <tr>
+                        <th scope="col">ชื่อบอร์ดเกม</th>
+                        <th scope="col">โต๊ะ</th>
+                        <th scope="col">จำนวนผู้เล่น</th>
+                        <th scope="col">ราคา</th>
+                        <th scope="col">ส่วนลด</th>
+                        <th scope="col">ระยะเวลา (ชั่วโมง)</th>
+                        <th scope="col">รวม</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{item.product}}</td>
+                            <td>{{order.table.name}}</td>
+                            <td>{{order.quantity}}</td>
+                            <td>{{item.price | intcomma }}</td>
+                            <td>{{item.discount}}</td>
+                            <td>{{item.order.duration}}</td>
+                            <td>{{item.sub_total | intcomma }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>ยอดชำระเงิน</strong></td>
+                            <td><strong>{{order.total}}</strong></td>
+                        </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+        <br><br><br><br><br>
+    </section>
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}สั่งซื้อสินค้า{% endblock title %}
+
+{% block content %}
+
+<section class="content2 cid-tsEQSCqggh my-5" id="content2-2">
+        <div class="container my-5">
+            <div class="mt-1">
+                <!-- Checkout Panel Information-->
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-4">
+                    <h3 class="fs-5 fw-bolder m-0 lh-1">ข้อมูลการเช่าบอร์ดเกม</h3>
+                </div>
+                <div class="row">
+                    <form method="POST">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="duration" class="form-label">ระยะเวลา (ชั่วโมง)</label>
+                            <input type="text" class="form-control" name="duration" required>
+                        </div>
+                    </div>
+                    <!--Phone-->
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="quantity" class="form-label">จำนวนคน</label>
+                            <input type="tel" class="form-control" name="quantity" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto mbr-section-btn align-center">
+                    <button type="submit" class="btn btn-primary display-4">เช่าบอร์ดเกม</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
