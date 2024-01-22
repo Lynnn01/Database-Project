@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "tablesapp",
 ]
 
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

@@ -8,8 +8,13 @@ from tablesapp.models import Table
 
 @login_required(login_url="/login")
 def table(request):
+    user = request.user
     table = Table.objects.all().order_by("name")
-    return render(request, "table.html", {"table": table})
+    return render(
+        request,
+        "table.html",
+        {"table": table, "user": user},
+    )
 
 
 def reservTable(request, table_id):
@@ -23,3 +28,12 @@ def reservTable(request, table_id):
         table.status = True
         table.save()
         return redirect("/tables")
+
+
+def cancelTable(request, table_id):
+    table = Table.objects.get(id=table_id)
+    table.status = False
+    table.customer = None
+    table.save()
+    messages.warning(request, "คุณยกเลิกการจองโต๊ะแล้ว")
+    return redirect("/tables")

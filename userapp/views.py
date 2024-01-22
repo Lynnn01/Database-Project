@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate as auth, login as alogin, logout as alogout
-from userapp.models import Point
+from userapp.models import Userinfo
 
 # Create your views here.
 
@@ -13,20 +13,43 @@ def register(request):
         username = request.POST["username"]
         email = request.POST["email"]
         password = request.POST["password"]
-        if username == "" or email == "" or password == "":
+        firstname = request.POST["firstname"]
+        lastname = request.POST["lastname"]
+        phone = request.POST["phone"]
+        message = ""
+        if (
+            username == ""
+            or email == ""
+            or password == ""
+            or firstname == ""
+            or lastname == ""
+            or phone == ""
+        ):
             messages.warning(request, "กรุณาป้อนข้อมูลให้ครบ")
             return redirect("/register")
         else:
             if User.objects.filter(username=username).exists():
-                messages.warning(request, "ชื่อผู้ใช้ถูกใช้งานแล้ว")
-                return redirect("/register")
+                message = "ชื่อผู้ใช้"
+
+            elif User.objects.filter(email=email).exists():
+                message = "อีเมล"
+
+            elif Userinfo.objects.filter(phone=phone).exists():
+                message = "เบอร์โทร"
             else:
                 user = User.objects.create_user(
                     username=username, email=email, password=password
                 )
                 user.save()
+
+                user_info = Userinfo.objects.create(member=user, phone=phone, point=0)
+                user_info.save()
                 messages.success(request, "สร้างบัญชีผู้ใช้เรียบร้อย")
                 return redirect("/login")
+
+            if message != "":
+                messages.warning(request, f"{message}ถูกใช้งานแล้ว")
+                return redirect("/register")
     else:
         return render(request, "register.html")
 
@@ -71,7 +94,7 @@ def logout(request):
 
 def points(request, price):
     user = request.user
-    points = Point.objects.get(member=user)
+    points = Userinfo.objects.get(member=user)
     discount = 0
 
     if points.point >= 100:

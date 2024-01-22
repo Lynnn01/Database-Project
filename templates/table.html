@@ -42,9 +42,17 @@
               <a class="text-success mx-2 text-center" href="{% url "reservTable" i.id %}" onclick="return confirm('คุณต้องการจองโต๊ะหรือไม่ ?')">จอง</a>
             </td>
             {% else %}
-            <td>
+              {% if i.customer == user %}
+              
+              <td>
+                <a class="text-secondary mx-2 text-center" href="{% url "cancelTable" i.id %}" onclick="return confirm('คุณต้องการยกเลิกการจองโต๊ะหรือไม่ ?')"><b>ยกเลิกการจอง</b></a>
+              </td>
+              {% else %}
+              <td>
               <h6 class="text-secondary mx-2 text-center"><b>โต๊ะเต็ม</b></h6>
-            </td>
+              </td>
+              {% endif %}
+            
             {% endif %}
             
 
