@@ -9,18 +9,18 @@ from django.contrib.auth.models import User
 class UserInline(admin.StackedInline):
     model = Userinfo
     can_delete = False
-    verbose_name_plural = "member"
+    verbose_name_plural = "user"
 
 
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = [UserInline]
-    list_display = [
-        "username",
-        "email",
-        "first_name",
-        "last_name",
-    ]
+    # list_display = [
+    #     "username",
+    #     "email",
+    #     "first_name",
+    #     "last_name",
+    # ]
 
 
 admin.site.unregister(User)

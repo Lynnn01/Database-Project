@@ -29,7 +29,7 @@ def products(
     products = Product.objects.all().order_by("name")
     # หมายเลขหน้า
     page = request.GET.get("page")
-    paginator = Paginator(products, 3)
+    paginator = Paginator(products, 6)
 
     products = paginator.get_page(page)
 

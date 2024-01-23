@@ -6,6 +6,7 @@ from productsapp.models import Product
 from cartapp.views import create_cartId
 from tablesapp.models import Table
 from userapp.views import points
+from datetime import datetime, timezone, timedelta
 
 # Create your views here.
 
@@ -16,19 +17,21 @@ def order(request):
 
     if request.method == "POST":
         duration = request.POST["duration"]
-        quantity = request.POST["quantity"]
 
         table = Table.objects.get(customer=user)
         cart = Cart.objects.get(cart_id=create_cartId(request), customer=user)
         item = cartItem.objects.get(cart=cart)
+        receipt_number = (
+            str(datetime.now(timezone(timedelta(hours=+7))).strftime("%y%m%d%f")) + str(user.id)
+        )
 
         total = float(item.product.price) * float(int(duration))
 
-        discount = (points(request, total))
+        discount = points(request, total)
 
         order = Order.objects.create(
+            receipt_number=receipt_number,
             duration=duration,
-            quantity=quantity,
             total=total - discount,
             customer=user,
             table=table,

@@ -14,7 +14,7 @@
         <div class="container my-5">
             <div class="mbr-section-head">
                 <h4 class="mbr-section-title mbr-fonts-style align-start mb-0 display-2">
-                    <strong>รหัสการเช่า {{order.id}}</strong>
+                    <strong>รหัสการเช่า {{order.receipt_number}}</strong>
                 </h4>
             </div>
             <div class="row my-5">
@@ -23,7 +23,6 @@
                       <tr>
                         <th scope="col">ชื่อบอร์ดเกม</th>
                         <th scope="col">โต๊ะ</th>
-                        <th scope="col">จำนวนผู้เล่น</th>
                         <th scope="col">ราคา</th>
                         <th scope="col">ส่วนลด</th>
                         <th scope="col">ระยะเวลา (ชั่วโมง)</th>
@@ -34,7 +33,6 @@
                         <tr>
                             <td>{{item.product}}</td>
                             <td>{{order.table.name}}</td>
-                            <td>{{order.quantity}}</td>
                             <td>{{item.price | intcomma }}</td>
                             <td>{{item.discount}}</td>
                             <td>{{item.order.duration}}</td>
