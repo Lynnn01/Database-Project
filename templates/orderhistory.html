@@ -24,6 +24,7 @@
             <th scope="col">รหัสการเช่า</th>
             <th scope="col">วันที่เช่า</th>
             <th scope="col">ยอดชำระเงิน</th>
+            <th scope="col">สถานะ</th>
             <th scope="col">ดูรายละเอียด</th>
           </tr>
         </thead>
@@ -33,6 +34,12 @@
             <th scope="row">{{i.receipt_number}}</th>
             <td>{{i.created}}</td>
             <td>{{i.total | intcomma }}</td>
+            {% if i.status == False %}
+            <td><h6 class="text-secondary mx-2 text-center">ยังไม่ส่งมอบ</h6></td>
+            {% else %}
+            <td><h6 class="text-success mx-2 text-center">ส่งมอบแล้ว</h6></td>
+            {% endif %}
+            
             <td>
               <a href="{% url "orderDetail" i.id %}">รายละเอียด</a>
             </td>

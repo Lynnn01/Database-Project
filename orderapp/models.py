@@ -8,7 +8,8 @@ class Order(models.Model):
     receipt_number = models.CharField(default=0)
     duration = models.IntegerField(default=0)
     total = models.DecimalField(max_digits=10, decimal_places=2)
-    created = models.DateField(default=timezone.now())
+    created = models.DateField(default=timezone.now)
+    status = models.BooleanField(default=False)
     customer = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     table = models.ForeignKey(Table, on_delete=models.CASCADE, default=None)
 

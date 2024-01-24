@@ -73,29 +73,57 @@
   <table class="table text-center table-bordered my-5">
     <thead>
       <tr>
+        <th scope="col">ID</th>
         <th scope="col">รหัสการเช่า</th>
         <th scope="col">วันที่</th>
         <th scope="col">บอร์ดเกม</th>
         <th scope="col">โต๊ะ</th>
         <th scope="col">ชั่วโมง</th>
-        <th scope="col">สถานะ</th>
         <th scope="col">ราคา</th>
+        <th scope="col">ผู้เช่ายืม</th>
+        <th scope="col">สถานะ</th>
+        
       </tr>
     </thead>
     <tbody>
       {% for i in order %}
       <tr>
+        <td>{{i.order.id}}</td>
         <th scope="row">{{i.order.receipt_number}}</th>
         <td>{{i.order.created}}</td>
         <td>{{i.product}}</td>
         <td>{{i.order.table.name}}</td>
         <td>{{i.order.duration}}</td>
-        <td>{{i.table}}</td>
         <td>{{i.order.total | intcomma }}</td>
+        <td>{{i.order.customer }}</td>
+        <td>
+          {% if i.order.status == False %}
+          <a class="text-secondary mx-2 text-center" href="{% url "orderstatus" i.order.id %}" onclick="return confirm('คุณต้องการเปลี่ยนแปลงใช่สถานะหรือไม่ ?')"><b>ยังไม่ส่งมอบ</b></a>
+          {% else %}
+          <a class="text-success mx-2 text-center" href="{% url "orderstatus" i.order.id %}" onclick="return confirm('คุณต้องการเปลี่ยนแปลงใช่สถานะหรือไม่ ?')"><b>ส่งมอบแล้ว</b></a>
+          {% endif %}
+          
+        </td>
+        
       </tr>
       {% endfor %}
     </tbody>
   </table>
+
+
+  <nav aria-label="product-pagination" class="media-container-row">
+      <ul class="pagination pagination-lg">
+          {% for i in order.paginator.page_range %}
+              {% if i != order.number %}
+                  <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+              {% else %}
+                  <li class="page-item active"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+              {% endif %}
+          {% endfor %}
+        
+      </ul>
+  </nav>
 </div>
+
 
 {% endblock content %}

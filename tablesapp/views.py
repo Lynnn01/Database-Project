@@ -19,7 +19,7 @@ def table(request):
 
 def reservTable(request, table_id):
     user = request.user
-    if Table.objects.filter(customer=user).exists():
+    if Table.objects.filter(customer=user).exists() and user.is_superuser == False:
         messages.warning(request, "คุณมีโต๊ะที่จองไว้อยู่แล้ว")
         return redirect("/tables")
     else:

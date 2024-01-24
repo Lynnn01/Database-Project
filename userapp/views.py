@@ -7,6 +7,8 @@ from userapp.models import Userinfo
 from orderapp.models import Order, OrderDetail
 from datetime import datetime, timezone, timedelta
 import pickle
+from django.core.paginator import Paginator
+from productsapp import urls
 
 # Create your views here.
 
@@ -112,34 +114,45 @@ def points(request, price):
 
 
 def adminq(request):
-    order = OrderDetail.objects.all()
-    order_id = Order.objects.values_list("id", flat=True)
-    order_date = Order.objects.values_list("created", flat=True)
-    date = datetime.now(timezone(timedelta(hours=+7)))
-    sale_today = 0
-    sale_month = 0
-    sale_total = 0
-    for i in range(len(order_id)):
-        if str(order_date[i])[8:10] == str(date.strftime("%d")):
+    user = request.user
+    if user.is_superuser:
+        order = OrderDetail.objects.all().order_by("-id")
+
+        page = request.GET.get("page")
+        paginator = Paginator(order, 10)
+
+        order = paginator.get_page(page)
+
+        order_id = Order.objects.values_list("id", flat=True)
+        order_date = Order.objects.values_list("created", flat=True)
+        date = datetime.now(timezone(timedelta(hours=+7)))
+        sale_today = 0
+        sale_month = 0
+        sale_total = 0
+        for i in range(len(order_id)):
+            if str(order_date[i])[8:10] == str(date.strftime("%d")):
+                price = Order.objects.get(id=order_id[i])
+                sale_today += price.total
+
+        for i in range(len(order_id)):
+            if str(order_date[i])[5:7] == str(date.strftime("%m")):
+                price = Order.objects.get(id=order_id[i])
+                sale_month += price.total
+
+        for i in range(len(order_id)):
             price = Order.objects.get(id=order_id[i])
-            sale_today += price.total
+            sale_total += price.total
 
-    for i in range(len(order_id)):
-        if str(order_date[i])[5:7] == str(date.strftime("%m")):
-            price = Order.objects.get(id=order_id[i])
-            sale_month += price.total
+        return render(
+            request,
+            "admin.html",
+            {
+                "sale_today": sale_today,
+                "sale_month": sale_month,
+                "sale_total": sale_total,
+                "order": order,
+            },
+        )
 
-    for i in range(len(order_id)):
-        price = Order.objects.get(id=order_id[i])
-        sale_total += price.total
-
-    return render(
-        request,
-        "admin.html",
-        {
-            "sale_today": sale_today,
-            "sale_month": sale_month,
-            "sale_total": sale_total,
-            "order": order,
-        },
-    )
+    else:
+        return redirect("")

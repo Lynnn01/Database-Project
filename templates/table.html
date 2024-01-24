@@ -42,7 +42,7 @@
               <a class="text-success mx-2 text-center" href="{% url "reservTable" i.id %}" onclick="return confirm('คุณต้องการจองโต๊ะหรือไม่ ?')">จอง</a>
             </td>
             {% else %}
-              {% if i.customer == user %}
+              {% if i.customer == user or request.user.is_superuser %}
               
               <td>
                 <a class="text-secondary mx-2 text-center" href="{% url "cancelTable" i.id %}" onclick="return confirm('คุณต้องการยกเลิกการจองโต๊ะหรือไม่ ?')"><b>ยกเลิกการจอง</b></a>

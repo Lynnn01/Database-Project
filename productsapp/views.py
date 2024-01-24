@@ -23,9 +23,7 @@ def productDetail(request, id):
     )
 
 
-def products(
-    request,
-):
+def products(request):
     products = Product.objects.all().order_by("name")
     # หมายเลขหน้า
     page = request.GET.get("page")

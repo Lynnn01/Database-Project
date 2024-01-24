@@ -54,7 +54,28 @@
                         </li>
                         
 
-                        {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link link text-black show display-4" href="/tables">จองโต๊ะ</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link link text-black dropdown-toggle show display-4" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="bi bi-person-circle iconfont"></span>
+                        </a>
+                        <div class="dropdown-menu show" aria-labelledby="dropdown-751" data-bs-popper="none">
+                            <a class="text-black show dropdown-item display-4" href="/adminmanage">ระบบจัดการคำสั่งซื้อ</a>
+                            <a class="text-black show dropdown-item display-4" href="/logout">ออกจากระบบ</a>
+                        </div>
+                        </li>
+                        
+                        <li class="nav-item">
+                        <a class="nav-link link text-black show display-4" href="/cart">
+                            <span class="bi bi-cart3 iconfont iconfont-btn"></span>
+                        </a>
+                        </li>
+
+                        {% elif request.user.is_authenticated %}
+
                         <li class="nav-item">
                             <a class="nav-link link text-black show display-4" href="/tables">จองโต๊ะ</a>
                         </li>
